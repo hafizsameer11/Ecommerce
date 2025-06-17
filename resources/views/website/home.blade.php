@@ -237,11 +237,15 @@
                                     </div>
                                     <div class="product-icon socile-icon-tooltip text-center">
                                         <ul>
-                                            <li><a href="#" data-tooltip="Add To Cart" class="add-cart"
-                                                    data-placement="left"><i class="fa fa-cart-plus"></i></a></li>
+                                            <li>
+                                                <a href="#" class="add-cart" data-id="{{ $product->id }}" data-tooltip="Add To Cart">
+                                                    <i class="fa fa-cart-plus"></i>
+                                                </a>
+                                            </li>
+
                                             <li><a href="#" data-tooltip="Wishlist" class="w-list"><i
                                                         class="fa fa-heart-o"></i></a></li>
-                                           
+
                                         </ul>
                                     </div>
                                 </div>
@@ -1715,4 +1719,30 @@
     <!-- Placed js at the end of the document so the pages load faster -->
 
     <!-- jquery latest version -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.add-cart').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const productId = this.dataset.id;
+
+                    fetch("{{ route('cart.add') }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({ product_id: productId })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        alert(data.message); // You can use toastr or Swal here
+                    })
+                    .catch(err => console.error('Cart error:', err));
+                });
+            });
+        });
+    </script>
+
 @endsection

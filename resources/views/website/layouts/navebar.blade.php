@@ -47,53 +47,45 @@
                                     </li>
                                     <li>
                                         <div class="header-cart">
-                                            <div class="cart-icon"> <a href="#">Cart<i
-                                                        class="zmdi zmdi-shopping-cart"></i></a> <span>2</span> </div>
+                                            <div class="cart-icon">
+                                                <a href="{{ route('cart.view') }}">
+                                                    Cart <i class="zmdi zmdi-shopping-cart"></i>
+                                                </a>
+                                                <span>{{ $cartCount ?? 0 }}</span>
+                                            </div>
                                             <div class="cart-content-wraper">
-                                                <div class="cart-single-wraper">
-                                                    <div class="cart-img">
-                                                        <a href="#"><img
-                                                                src="{{ asset('assets/website/images/product/01.jpg') }}"
-                                                                alt="">
-                                                        </a>
-                                                    </div>
-                                                    <div class="cart-content">
-                                                        <div class="cart-name"> <a href="#">Aenean Eu
-                                                                Tristique</a>
+                                                @forelse($cartItems as $id => $item)
+                                                    <div class="cart-single-wraper">
+                                                        <div class="cart-img">
+                                                            <a href="#"><img src="{{ asset('uploads/products/' . $item['image']) }}" alt=""></a>
                                                         </div>
-                                                        <div class="cart-price"> $70.00 </div>
-                                                        <div class="cart-qty"> Qty: <span>1</span> </div>
-                                                    </div>
-                                                    <div class="remove"> <a href="#"><i
-                                                                class="zmdi zmdi-close"></i></a>
-                                                    </div>
-                                                </div>
-                                                <div class="cart-single-wraper">
-                                                    <div class="cart-img">
-                                                        <a href="#"><img
-                                                                src="{{ asset('assets/website/images/product/02.jpg') }}"
-                                                                alt=""></a>
-                                                    </div>
-                                                    <div class="cart-content">
-                                                        <div class="cart-name"> <a href="#">Aenean Eu
-                                                                Tristique</a>
+                                                        <div class="cart-content">
+                                                            <div class="cart-name"><a href="#">{{ $item['name'] }}</a></div>
+                                                            <div class="cart-price">${{ number_format($item['price'], 2) }}</div>
+                                                            <div class="cart-qty">Qty: <span>{{ $item['quantity'] }}</span></div>
                                                         </div>
-                                                        <div class="cart-price"> $70.00 </div>
-                                                        <div class="cart-qty"> Qty: <span>1</span> </div>
+                                                        <div class="remove">
+                                                            <a href="{{ route('cart.remove', $id) }}"><i class="zmdi zmdi-close"></i></a>
+                                                        </div>
                                                     </div>
-                                                    <div class="remove"> <a href="#"><i
-                                                                class="zmdi zmdi-close"></i></a>
+                                                @empty
+                                                    <div class="cart-single-wraper">
+                                                        <p class="text-center">Your cart is empty</p>
                                                     </div>
-                                                </div>
-                                                <div class="cart-subtotal"> Subtotal: <span>$200.00</span> </div>
+                                                @endforelse
+
+                                                <div class="cart-subtotal">Subtotal: <span>${{ number_format($cartTotal, 2) }}</span></div>
                                                 <div class="cart-check-btn">
-                                                    <div class="view-cart"> <a class="btn-def" href="cart.html">View
-                                                            Cart</a> </div>
-                                                    <div class="check-btn"> <a class="btn-def"
-                                                            href="checkout.html">Checkout</a> </div>
+                                                    <div class="view-cart">
+                                                        <a class="btn-def" href="{{ route('cart.view') }}">View Cart</a>
+                                                    </div>
+                                                    <div class="check-btn">
+                                                        <a class="btn-def" href="{{ route('checkout') }}">Checkout</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </li>
                                 </ul>
                             </div>
@@ -154,30 +146,7 @@
                                             </li>
                                         @endforeach
 
-                                        {{-- <li class="mega-parent pos-rltv"><a href="{{ route('shop') }}">Women</a>
-                                            <div class="mega-menu-area mma-700">
-                                                <ul class="single-mega-item">
-                                                    <li class="menu-title uppercase">Sharees</li>
-                                                    <li><a href="{{ route('shop') }}">Sharee 01</a></li>
 
-                                                </ul>
-                                                <ul class="single-mega-item">
-                                                    <li class="menu-title uppercase">Lahenga</li>
-                                                    <li><a href="{{ route('shop') }}">Lahenga 01</a></li>
-
-                                                </ul>
-                                                <ul class="single-mega-item">
-                                                    <li class="menu-title uppercase">Sandels</li>
-                                                    <li><a href="{{ route('shop') }}">Sandel 01</a></li>
-
-                                                </ul>
-                                                <div class="mega-banner-img">
-                                                    <a href="#"><img
-                                                            src="{{ asset('images/banner/banner-fashion.jpg') }}"
-                                                            alt=""></a>
-                                                </div>
-                                            </div>
-                                        </li> --}}
 
                                         <li><a href="{{ route('about') }}">ABOUT</a></li>
                                     </ul>

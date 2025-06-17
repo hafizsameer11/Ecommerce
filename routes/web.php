@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CartController as AdminCartController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductVariationController;
@@ -60,12 +61,20 @@ Route::get('/myaccount',[MyAccountController::class,'myaccount'])->name('myaccou
 
 Route::get('/singleproduct/{id}',[SingleProductController::class,'singleproduct'])->name('singleproduct');
 
-Route::get('/cart',[CartController::class,'cart'])->name('cart');
+Route::get('/cart',[CartController::class,'cart'])->name('cart.view');
 
 Route::get('/checkout',[CheckoutController::class,'checkout'])->name('checkout');
+Route::get('/final',[CheckoutController::class,'final'])->name('final');
+
+Route::patch('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
 
 
-
+Route::post('/add-to-cart', [AdminCartController::class, 'addToCart'])->name('cart.add');
+// Route::get('/cart', [AdminCartController::class, 'viewCart'])->name('cart.view');
+// Route::get('/cart/remove/{id}', [AdminCartController::class, 'removeFromCart'])->name('cart.remove');
+Route::patch('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/remove/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::post('/cart/update-all', [CartController::class, 'bulkUpdate'])->name('cart.bulkUpdate');
 
 // admin
 
